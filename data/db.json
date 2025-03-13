@@ -1,0 +1,28 @@
+{
+    "products": [
+        {
+            "id": 10001,
+            "name": "Basic to Advance in React",
+            "price": 29,
+            "in_stock": true
+        }, {
+            "id": 10002,
+            "name": "The Complete Guide for Beginner",
+            "price": 49,
+            "in_stock": true
+        }, {
+            "id": 10003,
+            "name": "Build a Blockchain in G0",
+            "price": 99,
+            "in_stock": false
+        },  {
+            "id": 10003,
+            "name": "Build a Blockchain in React",
+            "price": 79,
+            "in_stock": true
+        }
+    ],
+    "featured_product": [
+        {}
+    ]
+}
