@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export const ProductList = () => {
   const [products, setProduct] = useState([]);
   const [url, setUrl] = useState("http://localhost:8000/products");
 
   const urlPathList = {
-    "all": "http://localhost:8000/products",
-    "onlyStock": "http://localhost:8000/products?in_stock=true",
+    all: "http://localhost:8000/products",
+    onlyStock: "http://localhost:8000/products?in_stock=true",
   };
 
-  const fetchProduct = async () => {
-    const response = await fetch(url)
-    const data = await response.json()
-    setProduct(data)
-  }
+  const fetchProduct = useCallback(async () => {
+    const response = await fetch(url);
+    const data = await response.json();
+    setProduct(data);
+  }, [url]);
 
   useEffect(() => {
     fetchProduct();
@@ -21,12 +21,21 @@ export const ProductList = () => {
     return () => {
       console.log("page is deallocated!");
     };
-  }, [url]);
+  }, [fetchProduct]);
 
   return (
     <section>
-      <button onClick={() => setUrl(urlPathList["all"])} className="all">All</button>
-      <button onClick={() => setUrl(urlPathList["onlyStock"])} className="onlyStock">In Stock Only</button>
+      <div className="filter">
+        <button onClick={() => setUrl(urlPathList["all"])} className="all">
+          All
+        </button>
+        <button
+          onClick={() => setUrl(urlPathList["onlyStock"])}
+          className="onlyStock"
+        >
+          In Stock Only
+        </button>
+      </div>
       {products.map((product) => {
         return (
           <div className="card">
