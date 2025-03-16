@@ -16,7 +16,7 @@
             "price": 99,
             "in_stock": false
         },  {
-            "id": 10003,
+            "id": 10004,
             "name": "Build a Blockchain in React",
             "price": 79,
             "in_stock": true

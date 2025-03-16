@@ -1,27 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useFetch } from "../hooks/useFetch";
 
 export const ProductList = () => {
-  const [products, setProduct] = useState([]);
   const [url, setUrl] = useState("http://localhost:8000/products");
 
   const urlPathList = {
     all: "http://localhost:8000/products",
     onlyStock: "http://localhost:8000/products?in_stock=true",
   };
+  
+  const { data: products, error, isLoading } = useFetch(url, { timeout: 1000 });
+  console.log(products);
 
-  const fetchProduct = useCallback(async () => {
-    const response = await fetch(url);
-    const data = await response.json();
-    setProduct(data);
-  }, [url]);
-
-  useEffect(() => {
-    fetchProduct();
-
-    return () => {
-      console.log("page is deallocated!");
-    };
-  }, [fetchProduct]);
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <section>
@@ -36,9 +28,9 @@ export const ProductList = () => {
           In Stock Only
         </button>
       </div>
-      {products.map((product) => {
+      {products && products.map((product) => {
         return (
-          <div className="card">
+          <div className="card" key={product.id}>
             <p className="id">{product.id}</p>
             <p className="name">{product.name}</p>
             <p className="info">
