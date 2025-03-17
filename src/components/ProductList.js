@@ -9,11 +9,8 @@ export const ProductList = () => {
     onlyStock: "http://localhost:8000/products?in_stock=true",
   };
   
-  const { data: products, error, isLoading } = useFetch(url, { timeout: 1000 });
-  console.log(products);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const { data: products, loading } = useFetch(url);
+  console.log(products, loading);
 
   return (
     <section>
@@ -28,6 +25,8 @@ export const ProductList = () => {
           In Stock Only
         </button>
       </div>
+      { loading && <p>Loading...</p> }
+
       {products && products.map((product) => {
         return (
           <div className="card" key={product.id}>
