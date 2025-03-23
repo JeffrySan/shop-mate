@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 
 export const ProductList = () => {
-  const [url, setUrl] = useState("http://localhost:8000/products");
+  const [url, setUrl] = useState("http://localhost:8000/product");
 
   const urlPathList = {
-    all: "http://localhost:8000/products",
+    all: "http://localhost:8000/product",
     onlyStock: "http://localhost:8000/products?in_stock=true",
   };
   
-  const { data: products, loading } = useFetch(url);
-  console.log(products, loading);
+  const { data: products, loading, error } = useFetch(url);
 
   return (
     <section>
@@ -26,8 +25,8 @@ export const ProductList = () => {
         </button>
       </div>
       { loading && <p>Loading...</p> }
-
-      {products && products.map((product) => {
+      { error && <p>{error}</p> }
+      { !error && products && products.map((product) => {
         return (
           <div className="card" key={product.id}>
             <p className="id">{product.id}</p>
